@@ -1,0 +1,38 @@
+DECLARE @nazwa_zmiennej typ_zmiennej
+
+IF warunek
+BEGIN
+	...
+END
+ELSE
+BEGIN
+	...
+END
+
+WHILE warunek
+BEGIN
+	...
+END
+
+CREATE PROCEDURE nazwa_procedury
+@nazwa_parametru typ_parametru
+AS BEGIN
+	...
+END
+
+DECLARE nazwa_kursora CURSOR FOR SELECT ...
+OPEN nazwa_kursora
+FETCH NEXT FROM nazwa_kursora INTO @zmienna1, @zmienna2, ...
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	...
+END
+CLOSE nazwa_kursora
+DEALLOCATE nazwa_kursora
+
+CREATE TRIGGER nazwa_wyzwalacza
+ON tabela
+FOR operacje
+AS BEGIN
+	...
+END

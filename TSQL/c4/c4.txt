@@ -1,0 +1,14 @@
+1. Przy pomocy kursora przejrzyj wszystkich pracowników i zmodyfikuj wynagrodzenia tak,
+    aby osoby zarabiające mniej niż 1000 miały zwiększone wynagrodzenie o 10%,
+    natomiast osoby zarabiające powyżej 1500 miały zmniejszone wynagrodzenie o 10%.
+    Wypisz na ekran każdą wprowadzoną zmianę.
+2. Przerób kod z zadania 1 na procedurę tak, aby wartości zarobków (1000 i 1500) nie były stałe, tylko były parametrami procedury.
+3. W procedurze sprawdź średnią wartość zarobków z tabeli EMP z działu określonego parametrem procedury.
+    Następnie należy dać prowizję (comm) tym pracownikom tego działu, którzy zarabiają poniżej średniej.
+    Prowizja powinna wynosić 5% ich miesięcznego wynagrodzenia.
+4. (bez kursora) Utwórz tabelę Magazyn (IdPozycji, Nazwa, Ilosc) zawierającą ilości poszczególnych towarów w magazynie i
+    wstaw do niej kilka przykładowych rekordów. W bloku Transact-SQL sprawdź,
+    którego artykułu jest najwięcej w magazynie i zmniejsz ilość tego artykułu o 5
+    (jeśli stan jest większy lub równy 5, w przeciwnym wypadku zgłoś błąd).
+5. Przerób kod z zadania 4 na procedurę, której będziemy mogli podać wartość,
+    o którą zmniejszamy stan (zamiast wpisanego „na sztywno” 5).

@@ -1,0 +1,21 @@
+1. Stwórz wyzwalacz, który wycofa całą transakcję, jeśli jest usuwany jakiś pracownik.
+2. Stwórz procedurę, która przyjmuje jako parametry imię i nazwisko klienta.
+Procedura ta powinna wyliczać ile zakupów zrobił dany klient.
+Liczba zakupów powinna zostać zwrócona jako OUTPUT.
+3. Stwórz wyzwalacz, który nie pozwoli wykonać operacji DELETE,
+jeśli usuwany jest jakiś produkt, który został sprzedany.
+4. Stwórz procedurę, która jako parametr przyjmuje nazwę miasta.
+Wszyscy klienci, którzy nie mają przypisanego miasta zostaną do niego przypisani.
+Jeśli podane miasto nie istnieje, to należy je wcześniej utworzyć.
+5. Stwórz wyzwalacz, który nie pozwoli na wpisanie pracowników o nazwiskach już istniejących.
+Wyzwalacz powinien zablokować jedynie niepoprawnie wpisywanych pracowników.
+6. Stwórz procedurę, która przyjmie jako parametry imię i nazwisko pracownika oraz nazwę miasta.
+Następnie podany pracownik powinien zostać przypisany do danego miasta.
+Jeśli nie istnieje jeszcze taki pracownik i/lub miasto to zostaną utworzeni.
+W przypadku konieczności utworzenia pracownika, jego pensja powinna być równa średniej pensji wszystkich pracowników.
+7. Stwórz wyzwalacz, który przy wpisywaniu nowego klienta sprawdzi, czy jest on przypisany do jakiegoś miasta.
+Jeśli nie, to przypisze go do pierwszego alfabetycznie miasta.
+8. Stwórz procedurę, która przyjmie jako parametry imię i nazwisko klienta.
+Jeśli podany klient nie istnieje, należy wypisać odpowiedni komunikat.
+W przeciwnym przypadku, procedura powinna wyświetlić ile poszczególnych produktów zostało przez niego zakupionych
+(należy uwzględnić ilości produktów w poszczególnych sprzedażach).
