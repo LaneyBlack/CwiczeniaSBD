@@ -51,17 +51,54 @@ CREATE TRIGGER task5
     ON PRACOWNIK
     FOR insert AS
 BEGIN
-    DECLARE cursor CURSOR FOR SELECT ID_PRACOWNIK FROM inserted;
-    DECLARE @empID INT;
-    OPEN cursor;
-    FETCH NEXT FROM cursor INTO @empID;
-    WHILE @@fetch_status = 0
+    DELETE
+    FROM PRACOWNIK
+    WHERE ID_PRACOWNIK IN (SELECT ID_PRACOWNIK
+                           FROM inserted
+                                    INNER JOIN PRACOWNIK ON PRACOWNIK.NAZWISKO = inserted.NAZWISKO
+                           WHERE inserted.ID_PRACOWNIK != PRACOWNIK.ID_PRACOWNIK)
+end
+GO
+--Task6
+CREATE PROCEDURE task6 @name VARCHAR(20), @surname VARCHAR(20), @city VARCHAR(20)
+AS
+BEGIN
+    If NOT EXISTS(SELECT * FROM MIASTO WHERE MIASTO = @city)
+        INSERT INTO MIASTO VALUES ((SELECT MAX(ID_MIASTO) + 1 FROM MIASTO), @city);
+    If NOT EXISTS(SELECT IMIE, NAZWISKO FROM PRACOWNIK WHERE IMIE = @name, NAZWISKO = @surname)
+        INSERT INTO PRACOWNIK
+        VALUES ((SELECT MAX(ID_PRACOWNIK) + 1 FROM PRACOWNIK),
+                @name, @surname, 0,
+                (SELECT MAX(ID_MIASTO) FROM MIASTO));
+    ELSE
+        UPDATE PRACOWNIK
+        SET ID_MIASTO = (SELECT ID_MIASTO FROM MIASTO WHERE MIASTO = @city)
+        WHERE IMIE = @name
+          AND NAZWISKO = @surname;
+end
+GO
+--Task7
+CREATE TRIGGER task7
+    ON KLIENT
+    FOR insert AS
+BEGIN
+    UPDATE KLIENT
+    SET ID_MIASTO = (SELECT TOP 1 ID_MIASTO FROM MIASTO ORDER BY MIASTO)
+    WHERE ID_KLIENT IN (SELECT ID_KLIENT FROM inserted WHERE KLIENT.ID_MIASTO IS NULL);
+end
+GO
+--Task8
+CREATE PROCEDURE task8 @name VARCHAR(20), @surname VARCHAR(20)
+AS
+BEGIN
+    IF NOT EXISTS(SELECT * FROM KLIENT WHERE IMIE = @name AND NAZWISKO = @surname)
+        PRINT 'Klient does not exists'
+    ELSE
         BEGIN
-            IF (EXISTS(SELECT NAZWISKO
-                       FROM PRACOWNIK
-                       WHERE NAZWISKO = (SELECT NAZWISKO FROM inserted
-                                            WHERE inserted.ID_PRACOWNIK = @empID)))
-             DELETE FROM PRACOWNIK WHERE ID_PRACOWNIK = @empID;
-             FETCH NEXT FROM cursor INTO @empID;
+            DECLARE @number INT;
+            SELECT @number = SUM(ILOSC) FROM SPRZEDAZ
+            INNER JOIN KLIENT K on SPRZEDAZ.ID_KLIENT = K.ID_KLIENT
+            WHERE IMIE = @name AND NAZWISKO = @surname;
+            PRINT 'Klient has ' + CONVERT(VARCHAR, @number) + ' number of products';
         end
 end
