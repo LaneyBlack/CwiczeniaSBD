@@ -1,0 +1,18 @@
+1. Napisz program, który policzy i wypisze (za pomocą polecenia dbms_output.put_line) ile jest produktów z kategorii 'NABIAL'.
+
+2. Napisz wyzwalacz, który zgłosi błąd, jeśli jest usuwana jakaś kategoria.
+
+3. Stwórz procedurę, która przyjmie jako parametr nazwę kategorii. Wszystkie produkty bez kategorii powinny zostać do niej przypisane. Jeśli kategoria nie istnieje, to należy ją wcześniej utworzyć, z id dobranym tak, aby zapewnić unikalność.
+
+4. Stwórz wyzwalacz, który przy modyfikacji pracownika zadba, aby nowa pensja nie była mniejsza od starej.
+
+5. Stwórz procedurę, która jako parametr przyjmie nazwę miasta. Jeśli miasto nie istnieje powinien zostać wypisany komunikat. W przeciwnym przypadku wszyscy klienci przypisani do tego miasta powinni otrzymać jako id_miasto null, a samo miasto powinno zostać usunięte.
+
+6. Stwórz wyzwalacz, który nie pozwoli na wpisanie klientów, którzy już istnieją (czyli mają takie samo imię i nazwisko), a także nie pozwoli na zmianę imienia ani nazwiska klienta.
+
+7. Stwórz procedurę, która przyjmie jako parametry imię i nazwisko pracownika. Jeśli podany pracownik nie istnieje, należy wypisać komunikat. W przeciwnym przypadku procedura powinna wypisać ile różnych produktów dany pracownik sprzedał.
+
+8. Stwórz wyzwalacz (jeden), który:
+	a. Nie pozwoli usunąć produktu, jeśli jest on przypisany do jakiejś kategorii.
+	b. Nie pozwoli na wpisanie produktu, którego cena byłaby mniejsza lub równa 0.
+	c. Nie pozwoli na modyfikację kategorii produktu.

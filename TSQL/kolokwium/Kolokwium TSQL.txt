@@ -1,0 +1,107 @@
+UWAGA! We wszystkich zadaniach, w których konieczne jest dodanie nowego wiersza za pomocą operacji INSERT należy zadbać o takie wyliczenie ID, aby nie było szansy na powtórzenie się klucza.
+
+1. Stwórz procedurę, która przyjmuje jako parametr nazwę miasta. Procedura ta powinna wyliczać ilu klientów mieszka w podanym mieście. Liczba ta powinna zostać zwrócona jako parametr typu OUTPUT. (1,5p)
+CREATE PROCEDURE task1 @cityname VARCHAR(20), @number INT OUTPUT AS
+BEGIN
+    SELECT @number = COUNT(ID_KLIENT)
+    FROM MIASTO
+             INNER JOIN KLIENT K on MIASTO.ID_MIASTO = K.ID_MIASTO
+    WHERE MIASTO.ID_MIASTO = (SELECT ID_MIASTO FROM MIASTO WHERE MIASTO = @cityname);
+end
+GO
+2. Stwórz wyzwalacz, który nie pozwoli wykonać operacji DELETE, jeśli usuwane jest miasto, w którym ktoś mieszka (klient/pracownik). (1,5p)
+CREATE TRIGGER task2
+    ON MIASTO
+    FOR DELETE AS
+    BEGIN
+        IF (EXISTS(SELECT ID_KLIENT
+                   FROM KLIENT
+                            RIGHT OUTER JOIN deleted D on KLIENT.ID_MIASTO = D.ID_MIASTO
+                   WHERE ID_KLIENT IS NOT NULL) OR
+            EXISTS(SELECT ID_PRACOWNIK
+                   FROM PRACOWNIK
+                            RIGHT OUTER JOIN deleted D on PRACOWNIK.ID_MIASTO = D.ID_MIASTO
+                   WHERE ID_PRACOWNIK IS NOT NULL))
+            BEGIN
+                PRINT 'Trigger ends'
+                ROLLBACK
+            END
+    end
+GO
+3. Stwórz procedurę, która jako parametr przyjmuje nazwę miasta. Wszyscy pracownicy, którzy są do niego przypisani powinni otrzymać jako swoje miasto wartość NULL. Następnie należy usunąć podane miasto. Jeśli podane miasto nie istnieje, należy wypisać komunikat. (1,5p)
+CREATE PROCEDURE task3 @cityname VARCHAR(20) AS
+BEGIN
+    IF NOT EXISTS(SELECT * FROM MIASTO WHERE MIASTO = @cityname)
+        PRINT 'City ' + @cityname + ' does not exists';
+    ELSE
+        BEGIN
+            UPDATE PRACOWNIK
+            SET ID_MIASTO=null
+            WHERE ID_MIASTO = (SELECT ID_MIASTO FROM MIASTO WHERE MIASTO = @cityname);
+            DELETE FROM MIASTO WHERE MIASTO = @cityname;
+        end
+end
+GO
+4. Stwórz wyzwalacz, który nie pozwoli na wpisanie miast o nazwach już istniejących. Wyzwalacz powinien zablokować jedynie niepoprawnie wpisywane miasta. (1,5p)
+CREATE TRIGGER task4
+    ON MIASTO
+    FOR INSERT
+    AS
+BEGIN
+    DELETE
+    FROM MIASTO
+    WHERE ID_MIASTO IN (SELECT I.ID_MIASTO
+                        FROM inserted I
+                                 INNER JOIN MIASTO ON MIASTO.MIASTO = I.MIASTO
+                        WHERE I.ID_MIASTO != MIASTO.ID_MIASTO);
+end
+GO
+5. Stwórz procedurę, która przyjmie jako parametry imię i nazwisko klienta, imię i nazwisko pracownika oraz nazwę i ilosc produktu.
+Następnie procedura powinna dodać sprzedaż w której brali udział podany klient i pracownik, a kupowany był podany produkt w sprecyzowanej ilości.
+Data sprzedaży powinna być ustawiona na dzisiejszą (można użyć w tym celu funkcji GETDATE(), która zwraca obecną datę). (2p)
+CREATE PROCEDURE task5 @kname VARCHAR(20), @ksurname VARCHAR(20),
+                       @pname VARCHAR(20), @psurname VARCHAR(20),
+                       @prodname VARCHAR(20), @prodcount INT AS
+BEGIN
+    INSERT INTO SPRZEDAZ
+    VALUES ((SELECT MAX(ID_SPRZEDAZ) + 1 FROM SPRZEDAZ), --ID_SPRZEDAZ
+            (SELECT ID_KLIENT FROM KLIENT
+             WHERE IMIE = @kname AND NAZWISKO = @ksurname), --ID_KLIENT
+            (SELECT ID_PRACOWNIK FROM PRACOWNIK
+             WHERE IMIE = @pname AND NAZWISKO = @psurname), --ID_PRACOWNIK
+            (SELECT ID_PRODUKT FROM PRODUKT
+             WHERE PRODUKT.NAZWA = @prodname), --ID_PRODUKT
+            GETDATE(), --DATA
+            @prodcount) --ILOSC
+end
+GO
+6. Stwórz jeden wyzwalacz, który: (2p)
+	- wycofa transakcję, jeśli usuwany jest klient, który brał udział w jakiejś sprzedaży.
+	- sprawdzi, czy wpisywany klient ma przypisane miasto - jeśli nie, to przypisze mu pierwsze alfabetycznie miasto.
+	- wycofa transakcję, jeśli nazwisko jakiegoś klienta jest zmieniane.
+CREATE TRIGGER task6
+    ON KLIENT
+    FOR INSERT, DELETE, UPDATE AS
+BEGIN
+    --DELETE
+    IF EXISTS(SELECT S.ID_SPRZEDAZ
+              FROM SPRZEDAZ S
+                       RIGHT OUTER JOIN deleted D on S.ID_KLIENT = D.ID_KLIENT
+              WHERE ID_SPRZEDAZ IS NOT NULL)
+        ROLLBACK;
+    --INSERT
+    IF EXISTS(SELECT ID_MIASTO FROM inserted WHERE ID_MIASTO IS NULL)
+        BEGIN
+            UPDATE KLIENT
+            SET ID_MIASTO = (SELECT TOP 1 ID_MIASTO FROM MIASTO ORDER BY MIASTO)
+            WHERE ID_KLIENT IN
+                  (SELECT ID_KLIENT FROM inserted I WHERE ID_MIASTO IS NULL);
+        end
+    --UPDATE
+    IF EXISTS(SELECT D.ID_KLIENT
+              FROM deleted D
+                       INNER JOIN inserted I ON I.ID_KLIENT = D.ID_KLIENT
+              WHERE I.NAZWISKO != D.NAZWISKO)
+        ROLLBACK;
+end
+GO

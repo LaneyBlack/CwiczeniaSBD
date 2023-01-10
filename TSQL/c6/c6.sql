@@ -7,7 +7,7 @@ BEGIN
 end
 GO
 --Task2
-ALTER PROCEDURE getNumberOfDeals @cname VARCHAR(20), @csurname VARCHAR(20), @count INT OUTPUT
+Create PROCEDURE getNumberOfDeals @cname VARCHAR(20), @csurname VARCHAR(20), @count INT OUTPUT
 AS
 BEGIN
     SELECT @count = COUNT(*)
@@ -65,7 +65,7 @@ AS
 BEGIN
     If NOT EXISTS(SELECT * FROM MIASTO WHERE MIASTO = @city)
         INSERT INTO MIASTO VALUES ((SELECT MAX(ID_MIASTO) + 1 FROM MIASTO), @city);
-    If NOT EXISTS(SELECT IMIE, NAZWISKO FROM PRACOWNIK WHERE IMIE = @name, NAZWISKO = @surname)
+    If NOT EXISTS(SELECT IMIE, NAZWISKO FROM PRACOWNIK WHERE IMIE = @name AND NAZWISKO = @surname)
         INSERT INTO PRACOWNIK
         VALUES ((SELECT MAX(ID_PRACOWNIK) + 1 FROM PRACOWNIK),
                 @name, @surname, 0,
@@ -96,9 +96,12 @@ BEGIN
     ELSE
         BEGIN
             DECLARE @number INT;
-            SELECT @number = SUM(ILOSC) FROM SPRZEDAZ
-            INNER JOIN KLIENT K on SPRZEDAZ.ID_KLIENT = K.ID_KLIENT
-            WHERE IMIE = @name AND NAZWISKO = @surname;
+            SELECT @number = SUM(ILOSC)
+            FROM SPRZEDAZ
+                     INNER JOIN KLIENT K on SPRZEDAZ.ID_KLIENT = K.ID_KLIENT
+            WHERE IMIE = @name
+              AND NAZWISKO = @surname;
             PRINT 'Klient has ' + CONVERT(VARCHAR, @number) + ' number of products';
         end
 end
+GO

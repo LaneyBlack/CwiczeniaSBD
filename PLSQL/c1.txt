@@ -1,0 +1,50 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+    variable INT;
+BEGIN
+    variable := 1;
+
+    SELECT sal
+    INTO variable
+    FROM emp
+    WHERE ename = 'SMITH';
+    dbms_output.put_line('Zmienna to: ' || variable);
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+            dbms_output.put_line('Zmienna to: exception');
+end;
+
+If  warunek THEN
+...
+ELSIF warunek THEN
+...
+ELSE
+...
+END IF;
+
+WHILE warunek LOOP
+...
+END LOOP;
+LOOP
+...
+EXIT WHEN warunek;
+...
+END LOOP;
+
+FOR zmienna IN 5..10 LOOP
+...
+END LOOP;
+
+BEGIN
+    FOR wiersz IN (SELECT ename, sal FROM emp) LOOP
+        sout(wiersz.ename || ' zarabia ' || wiersz.sal);
+    END LOOP;
+end;
+
+CREATE OR REPLACE PROCEDURE proc(p1 INT, p2 VARCHAR)
+AS
+    zmienna INT
+BEGIN
+...
+END;
