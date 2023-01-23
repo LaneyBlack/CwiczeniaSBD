@@ -239,103 +239,103 @@ END;
 -- Inserting values ------------------------------------------------------------
 BEGIN
     INSERT INTO Person
-    VALUES (ISNULL((SELECT MAX(ID) FROM Person) + 1, 1), 'John', 'Smith', 200, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM Person) + 1, 1), 'John', 'Smith', 200, 2);
     INSERT INTO Person
-    VALUES (ISNULL((SELECT MAX(ID) FROM Person) + 1, 1), 'Jack', 'Richer', 180, 4);
+    VALUES (NVL((SELECT MAX(ID) FROM Person) + 1, 1), 'Jack', 'Richer', 180, 4);
     INSERT INTO Person
-    VALUES (ISNULL((SELECT MAX(ID) FROM Person) + 1, 1), 'Mikle', 'Asher', 120, 1);
+    VALUES (NVL((SELECT MAX(ID) FROM Person) + 1, 1), 'Mikle', 'Asher', 120, 1);
     INSERT INTO Person
-    VALUES (ISNULL((SELECT MAX(ID) FROM Person) + 1, 1), 'Maximus', 'Kicker', 130, null);
+    VALUES (NVL((SELECT MAX(ID) FROM Person) + 1, 1), 'Maximus', 'Kicker', 130, null);
     INSERT INTO Person
-    VALUES (ISNULL((SELECT MAX(ID) FROM Person) + 1, 1), 'Kile', 'Walker', 100, 3);
+    VALUES (NVL((SELECT MAX(ID) FROM Person) + 1, 1), 'Kile', 'Walker', 100, 3);
     INSERT INTO Person
-    VALUES (ISNULL((SELECT MAX(ID) FROM Person) + 1, 1), 'Mitchel', 'Fisher', 115, 1);
+    VALUES (NVL((SELECT MAX(ID) FROM Person) + 1, 1), 'Mitchel', 'Fisher', 115, 1);
 
 
     INSERT INTO Cook
-    VALUES (ISNULL((SELECT MAX(ID) FROM Cook) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'John'), 6, null);
+    VALUES (NVL((SELECT MAX(ID) FROM Cook) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'John'), 6, null);
     INSERT INTO Cook
-    VALUES (ISNULL((SELECT MAX(ID) FROM Cook) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Jack'), 2,
+    VALUES (NVL((SELECT MAX(ID) FROM Cook) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Jack'), 2,
             (SELECT ID FROM Person WHERE firstname = 'John'));
 
 
     INSERT INTO Waiter
-    VALUES (ISNULL((SELECT MAX(ID) FROM Waiter) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Mikle'),
+    VALUES (NVL((SELECT MAX(ID) FROM Waiter) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Mikle'),
             '536820930');
     INSERT INTO Waiter
-    VALUES (ISNULL((SELECT MAX(ID) FROM Waiter) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Maximus'),
+    VALUES (NVL((SELECT MAX(ID) FROM Waiter) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Maximus'),
             '533221930');
 
 
     INSERT INTO Deliveryman
-    VALUES (ISNULL((SELECT MAX(ID) FROM Deliveryman) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Kile'),
+    VALUES (NVL((SELECT MAX(ID) FROM Deliveryman) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Kile'),
             '512375930', 9);
     INSERT INTO Deliveryman
-    VALUES (ISNULL((SELECT MAX(ID) FROM Deliveryman) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Mitchel'),
+    VALUES (NVL((SELECT MAX(ID) FROM Deliveryman) + 1, 1), (SELECT ID FROM Person WHERE firstname = 'Mitchel'),
             '533501930', 8);
 
 
     INSERT INTO DishType
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishType) + 1, 1), 'Main');
+    VALUES (NVL((SELECT MAX(ID) FROM DishType) + 1, 1), 'Main');
     INSERT INTO DishType
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishType) + 1, 1), 'Side');
+    VALUES (NVL((SELECT MAX(ID) FROM DishType) + 1, 1), 'Side');
     INSERT INTO DishType
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishType) + 1, 1), 'Dessert');
+    VALUES (NVL((SELECT MAX(ID) FROM DishType) + 1, 1), 'Dessert');
     INSERT INTO DishType
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishType) + 1, 1), 'Drink');
+    VALUES (NVL((SELECT MAX(ID) FROM DishType) + 1, 1), 'Drink');
 
 
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Pizza', 'Old as this world. Round but so yammy', 32,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Pizza', 'Old as this world. Round but so yammy', 32,
             (SELECT ID FROM DishType WHERE typename = 'Main'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Sushi', 'Japanese', 26,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Sushi', 'Japanese', 26,
             (SELECT ID FROM DishType WHERE typename = 'Main'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Bread', 'White garlic bread', 12,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Bread', 'White garlic bread', 12,
             (SELECT ID FROM DishType WHERE typename = 'Side'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Onigiri', 'Just perfect', 13,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Onigiri', 'Just perfect', 13,
             (SELECT ID FROM DishType WHERE typename = 'Side'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Pancake', 'So sweet', 46,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Pancake', 'So sweet', 46,
             (SELECT ID FROM DishType WHERE typename = 'Dessert'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Honey', null, 12,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Honey', null, 12,
             (SELECT ID FROM DishType WHERE typename = 'Side'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Cupcake', null, 12,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Cupcake', null, 12,
             (SELECT ID FROM DishType WHERE typename = 'Dessert'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Mohito', 'From natural products', 14,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Mohito', 'From natural products', 14,
             (SELECT ID FROM DishType WHERE typename = 'Drink'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Coca-Cola', null, 8,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Coca-Cola', null, 8,
             (SELECT ID FROM DishType WHERE typename = 'Drink'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Juice', 'Apple, carrot, orange, pineapple', 9,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Juice', 'Apple, carrot, orange, pineapple', 9,
             (SELECT ID FROM DishType WHERE typename = 'Drink'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Spaghetti Carbonara', 'Great and tasty', 32,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Spaghetti Carbonara', 'Great and tasty', 32,
             (SELECT ID FROM DishType WHERE typename = 'Main'));
     INSERT INTO Dish
-    VALUES (ISNULL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Spaghetti Bolognese', 'Perfect main dish', 30,
+    VALUES (NVL((SELECT MAX(ID) FROM Dish) + 1, 1), 'Spaghetti Bolognese', 'Perfect main dish', 30,
             (SELECT ID FROM DishType WHERE typename = 'Main'));
 
     INSERT INTO "ORDER"
-    VALUES (ISNULL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-02-09 07:00:00'),
+    VALUES (NVL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-02-09 07:00:00'),
             CONVERT(SMALLDATETIME, '2022-02-09 07:30:00'));
     INSERT INTO "ORDER"
-    VALUES (ISNULL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-02-09 07:40:00'),
+    VALUES (NVL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-02-09 07:40:00'),
             CONVERT(SMALLDATETIME, '2022-02-09 07:45:00'));
     INSERT INTO "ORDER"
-    VALUES (ISNULL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-02-09 07:57:00'),
+    VALUES (NVL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-02-09 07:57:00'),
             CONVERT(SMALLDATETIME, '2022-02-09 08:03:00'));
     INSERT INTO "ORDER"
-    VALUES (ISNULL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-04-02 12:02:00'),
+    VALUES (NVL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-04-02 12:02:00'),
             CONVERT(SMALLDATETIME, '2022-04-02 12:06:00'));
     INSERT INTO "ORDER"
-    VALUES (ISNULL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-04-02 12:56:00'),
+    VALUES (NVL((SELECT MAX(ID) FROM "ORDER") + 1, 1), CONVERT(SMALLDATETIME, '2022-04-02 12:56:00'),
             CONVERT(SMALLDATETIME, '2022-04-02 13:00:00'));
 
 
@@ -352,35 +352,35 @@ BEGIN
     VALUES (2, 4, CONVERT(SMALLDATETIME, '2022-04-02 12:15:00'), 'ul. Kierbiedza 12');
 
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 1, 1);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 1, 1);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 3, 1, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 3, 1, 2);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 6, 1, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 6, 1, 2);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 8, 1, 1);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 8, 1, 1);
 
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 2, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 2, 2);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 2, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 2, 2);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 2, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 2, 2);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 4, 2, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 4, 2, 2);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 10, 2, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 10, 2, 2);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 4, 2, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 4, 2, 2);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 2, 2, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 2, 2, 2);
 
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 4, 1);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 4, 1);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 4, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 1, 4, 2);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 8, 4, 1);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 8, 4, 1);
     INSERT INTO DishToOrder
-    VALUES (ISNULL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 8, 4, 2);
+    VALUES (NVL((SELECT MAX(ID) FROM DishToOrder) + 1, 1), 8, 4, 2);
 END;

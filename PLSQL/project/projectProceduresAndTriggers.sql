@@ -131,11 +131,12 @@ BEGIN
         ON Dish
         FOR DELETE AS
     BEGIN
-        IF EXISTS(SELECT Price FROM deleted d
+        IF EXISTS(SELECT Price
+                  FROM deleted d
                   WHERE d.Price > (SELECT AVG(Price) FROM dish WHERE Dish.DishType_ID = d.DishType_ID))
             BEGIN
                 ROLLBACK;
-            end;
+            end
     end;
         DELETE FROM Dish WHERE Name = 'Pancake';
 end;
