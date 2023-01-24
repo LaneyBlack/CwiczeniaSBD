@@ -1,0 +1,68 @@
+SET SERVEROUTPUT ON;
+
+dbms_output.put_line();
+
+DECLARE
+    ...
+BEGIN
+    ...
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        ...
+END;
+
+IF warunek THEN
+...
+ELSIF warunek THEN
+...
+ELSE
+...
+END IF;
+
+WHILE warunek LOOP
+...
+END LOOP;
+
+LOOP
+    ...
+    EXIT WHEN warunek;
+    ...
+END LOOP;
+
+FOR zmienna IN 5..10 LOOP
+...
+END LOOP;
+
+CREATE OR REPLACE PROCEDURE nazwa(p1 INT, p2 VARCHAR) AS
+    zmienna INT;
+BEGIN
+    ...
+END;
+
+DECLARE
+    CURSOR kursor IS SELECT ...;
+    wiersz kursor%ROWTYPE;
+BEGIN
+    OPEN kursor;
+    LOOP
+        FETCH kursor INTO wiersz;
+        EXIT WHEN kursor%NOTFOUND;
+        
+        ...
+    END LOOP;
+    CLOSE kursor;
+END;
+
+BEGIN
+    FOR wiersz IN (SELECT ...) LOOP
+        ...
+    END LOOP;
+END;
+
+CREATE OR REPLACE TRIGGER nazwa
+BEFORE INSERT OR DELETE OR UPDATE
+ON tabela
+FOR EACH ROW --opcjonalnie
+BEGIN
+	...
+END;

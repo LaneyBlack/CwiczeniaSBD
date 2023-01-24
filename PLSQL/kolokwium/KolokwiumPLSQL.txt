@@ -1,0 +1,14 @@
+1. Napisz program, który policzy i wypisze (za pomocą polecenia dbms_output.put_line) ilu jest pracowników. (1p)
+
+2. Napisz wyzwalacz, który zgłosi błąd, jeśli modyfikowany jest jakiś produkt. (1p)
+
+3. Stwórz procedurę, która przyjmie jako parametr nazwę miasta. Wszyscy klienci bez miasta powinni zostać do niego przypisani. Jeśli miasto nie istnieje, to należy je wcześniej utworzyć, z id dobranym tak, aby zapewnić unikalność. (2p)
+
+4. Stwórz wyzwalacz, który nie pozwoli na wpisanie produktów, które już istnieją (czyli mają taką samą nazwę), a także nie pozwoli na zmianę nazwy produktu. (2p)
+
+5. Stwórz procedurę, która przyjmie jako parametr nazwę produktu. Jeśli podany produkt nie istnieje, należy wypisać komunikat. W przeciwnym przypadku procedura powinna wypisać ile razy został sprzedany ten produkt. (2p)
+
+6. Stwórz wyzwalacz (jeden), który:
+	a. Nie pozwoli usunąć produktu, jeśli ma on cenę większą od 0.
+	b. Nie pozwoli na wpisanie produktu, który nie ma przypisanej kategorii.
+	c. Nie pozwoli na modyfikację nazwy produktu. (2p)
